@@ -19,7 +19,8 @@
 
 # About our game project
 
-A collaborative effort by our team to make a turn-based (out-of-turn-response) card game.
+A collaborative effort by our team to make a turn-based (out-of-turn-response)
+card game.
 
 ## `Organ Attack` description
 
@@ -42,14 +43,14 @@ your friends. The live version supports:
 
 ## 🛠 Tech Stack
 
-| Layer    | Technology                           |
-| -------- | ------------------------------------ |
-| Runtime  | [Deno 2.x](https://deno.land/)       |
-| Server   | [Hono 4.x](https://hono.dev/)        |
-| Language | TypeScript + Vanilla JS              |
-| Frontend | HTML / CSS / Vanilla JS              |
-| Testing  | Deno test runner + `@std/testing/bdd`|
-| CI       | GitHub Actions                       |
+| Layer    | Technology                            |
+| -------- | ------------------------------------- |
+| Runtime  | [Deno 2.x](https://deno.land/)        |
+| Server   | [Hono 4.x](https://hono.dev/)         |
+| Language | TypeScript + Vanilla JS               |
+| Frontend | HTML / CSS / Vanilla JS               |
+| Testing  | Deno test runner + `@std/testing/bdd` |
+| CI       | GitHub Actions                        |
 
 ---
 
@@ -93,10 +94,14 @@ deno task lint            # lint the codebase
 ## 🎲 How to Play
 
 1. **Login** — enter your name on the home page to create a session.
-2. **Create or Join a Room** — the host creates a room; guests enter the room ID on the join page.
-3. **Start the Game** — the host clicks **Start Game** from the lobby once all players have joined.
-4. **Take Turns** — play an attack card against an opponent's organ, or use a special card.
-5. **Defend** — even when it's not your turn, play an <font color='#b42929'>instant card</font> to block incoming attacks.
+2. **Create or Join a Room** — the host creates a room; guests enter the room ID
+   on the join page.
+3. **Start the Game** — the host clicks **Start Game** from the lobby once all
+   players have joined.
+4. **Take Turns** — play an attack card against an opponent's organ, or use a
+   special card.
+5. **Defend** — even when it's not your turn, play an
+   <font color='#b42929'>instant card</font> to block incoming attacks.
 6. **Win** — be the last player with at least one organ remaining!
 
 ---

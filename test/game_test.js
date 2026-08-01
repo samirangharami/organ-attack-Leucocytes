@@ -368,4 +368,40 @@ describe("Game model test", () => {
       assertEquals(player1Attacks.length, 0);
     });
   });
+
+  describe("Turn management with Instant cards", () => {
+    it("Should NOT set currentPlayedCard to true or pass turn when an instant card is played", () => {
+      const p1 = new Player("P1", 1);
+      const p2 = new Player("P2", 2);
+      p1.addOrgan(new Organ("heart", 1, 2));
+      p2.addOrgan(new Organ("lungs", 2, 2));
+      const turnManager = new TurnManager([p1, p2]);
+      const game = new Game([p1, p2], null, null, null, null, turnManager);
+
+      game.setFirstPlayer();
+      assertEquals(game.getCurrentPlayerID(), 1);
+
+      // Play instant card by current player
+      game.currentTurnPlayed({
+        attackerID: 1,
+        card: { action: "necrosis", isInstant: true },
+        opponentID: 2,
+      });
+
+      assertEquals(game.currentPlayedCard, false);
+      game.passTurn();
+      assertEquals(game.getCurrentPlayerID(), 1);
+
+      // Play non-instant card by current player
+      game.currentTurnPlayed({
+        attackerID: 1,
+        card: { action: "affliction", isInstant: false },
+        opponentID: 2,
+      });
+
+      assertEquals(game.currentPlayedCard, true);
+      game.passTurn();
+      assertEquals(game.getCurrentPlayerID(), 2);
+    });
+  });
 });

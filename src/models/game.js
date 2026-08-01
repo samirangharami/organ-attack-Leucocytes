@@ -59,8 +59,8 @@ export class Game {
       attackerID === playerID;
 
     this.currentPlayedCard = this.currentPlayedCard ||
-      !isCryoPlayedByMe || isNarcolepsyPlayedOnMe ||
-      attackerID === playerID && !card.isInstant;
+      isNarcolepsyPlayedOnMe ||
+      (attackerID === playerID && !card.isInstant && !isCryoPlayedByMe);
   }
 
   discardAttackCard(attackerID, attackCardID) {
