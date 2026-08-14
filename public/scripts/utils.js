@@ -86,7 +86,6 @@ export const createAttackCardElement = (cardData) => {
     .querySelector("#attack-cards")
     .content.cloneNode(true)
     .querySelector(".attack-card");
-  console.log("data", cardData);
 
   card.dataset.id = cardData.id;
   card.setAttribute("data-type", cardData.type);

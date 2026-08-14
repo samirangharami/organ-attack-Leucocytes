@@ -18,7 +18,6 @@ const createOpponentNodes = (opponents) => {
   const opponentNodes = opponents.map(({ id, name }) => {
     const opponentNode = opponentElement.cloneNode(true);
     opponentNode.dataset.id = id;
-    console.log(opponentNode);
     opponentNode.querySelector(".name").textContent = name;
     return opponentNode;
   });
@@ -51,9 +50,6 @@ const renderOpponentNodes = (popup, opponents) => {
 export const affliction = (card) => {
   const cardID = parseInt(card.dataset.id);
   const gameState = window.gameState;
-  console.log("isMyTurn", gameState.isMyTurn());
-  console.log("isInstant", gameState.isInstant(cardID), cardID);
-  console.log("isCard", gameState.isCardActive(cardID));
 
   if (
     (!gameState.isMyTurn() && !gameState.isInstant(cardID)) ||
@@ -258,9 +254,7 @@ export const situsInversusOrCryo = (card) => {
 
 // vaccine
 export const vaccine = async (card) => {
-  console.log("are mai yaha hu");
   const cardID = parseInt(card.dataset.id);
-  console.log(cardID, card);
 
   const gameState = window.gameState;
   if (!gameState.isMyTurn() || !gameState.isCardActive(cardID)) return;

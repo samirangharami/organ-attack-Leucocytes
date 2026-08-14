@@ -58,8 +58,9 @@ export class Player {
   }
 
   removeAttackCard(attackCardID, index) {
-    const attackIndex = index || this.#attackCards
-      .findIndex(({ id }) => id === attackCardID);
+    const attackIndex = index ??
+      this.#attackCards.findIndex(({ id }) => id === attackCardID);
+
     const card = this.#attackCards.splice(attackIndex, 1);
 
     return card[0];

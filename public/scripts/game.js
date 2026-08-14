@@ -29,10 +29,8 @@ const attachEventListener = async (
   //  prevent double click
   attackCardElement.style.pointerEvents = "none";
   const rect = attackCardElement.getBoundingClientRect();
-  console.log({ rect }, "in the listener");
   const attackCardID = getCardID(attackCardElement);
   const attackCard = player.attackCards.find(({ id }) => id === attackCardID);
-  console.log("in cards", { attackCard });
   setLastPlayedCard(attackCardElement, rect, attackCard);
   if (!(attackCard.action in ACTION_HANDLERS) || gameState.amISleeping()) {
     return;
@@ -145,7 +143,6 @@ window.onload = async () => {
     window.location.href = "/";
     return;
   }
-  console.log(players);
 
   window.gameState = new GameState(players);
 

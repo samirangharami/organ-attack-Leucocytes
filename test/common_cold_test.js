@@ -1,110 +1,38 @@
-// import { assertEquals } from "@std/assert";
-// import { beforeEach, describe, it } from "@std/testing/bdd";
-// import { createApp } from "../src/app.js";
-// import { counter } from "../src/utils.js";
-// import { Game } from "../src/models/game.js";
-// import { Player } from "../src/models/player.js";
-// import { Deck } from "../src/models/deck.js";
-// import { AfflictionHandler } from "../src/models/affliction_handler.js";
-// import { Dealer } from "../src/models/dealer.js";
-// import { Organ } from "../src/models/organ.js";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { Game } from "../src/models/game.js";
+import { Player } from "../src/models/player.js";
 
-// describe("Testing Common cold", () => {
-//   let roomID;
-//   let players;
-//   let shuffle;
-//   let session;
-//   let idGenerator;
-//   let playerIDGenerator;
-//   let roomIDGenerator;
-//   let rooms;
-//   let games;
-//   let game;
-//   let app;
+describe("Common Cold Card Mechanic Tests", () => {
+  it("Should exchange a card between attacker and opponent", () => {
+    const p1 = new Player("p1", 1);
+    const p2 = new Player("p2", 2);
 
-//   const logger = () => (_, next) => {
-//     return next();
-//   };
+    p1.fillHandWithAttacks([
+      { id: 1, action: "common-cold" },
+      { id: 3, action: "immunity-boost" },
+      { id: 4, action: "immunity-boost" },
+      { id: 5, action: "immunity-boost" },
+      { id: 6, action: "immunity-boost" },
+    ]);
 
-//   beforeEach(() => {
-//     roomID = 101;
-//     shuffle = (x) => x;
-//     const attackCards = new Deck(
-//       Array.from(
-//         { length: 10 },
-//         (_, i) => ({
-//           id: i + 1,
-//           action: "common-cold",
-//           type: "tactical",
-//           afflictableOrgans: [],
-//         }),
-//       ),
-//       shuffle,
-//     );
-//     const organCards = new Deck(
-//       [{ id: 1, health: 2 }, { id: 2, health: 2 }, { id: 3, health: 2 }, {
-//         id: 4,
-//         health: 2,
-//       }]
-//         .map(({ id, health }) => new Organ("o" + id, id, health)),
-//       shuffle,
-//     );
-//     rooms = { 101: [{ name: "chiru", id: 1 }, { name: "kumar", id: 2 }] };
-//     games = {};
+    p2.fillHandWithAttacks([
+      { id: 2, action: "immunity-boost" },
+      { id: 7, action: "narcolepsy" },
+      { id: 8, action: "medicine" },
+      { id: 9, action: "sedate" },
+      { id: 10, action: "chart-mixup" },
+    ]);
 
-//     players = rooms[roomID].map(({ name, id }) => new Player(name, id));
-//     players.map((player) => {
-//       player.fillHandWithOrgans([new Organ("Heart", 1, 1)]);
-//       player.fillHandWithAttacks([{
-//         id: 1,
-//         action: "common-cold",
-//         afflictableOrgans: [1],
-//       }]);
-//     });
-//     const dealer = new Dealer(attackCards, organCards, players);
+    const game = new Game([p1, p2], null, null, null, null);
 
-//     const afflictionHandler = new AfflictionHandler(attackCards, organCards);
+    game.exchangeCard(1, 1, 2);
 
-//     session = { "1": "chiru" };
-//     idGenerator = counter();
-//     playerIDGenerator = counter();
-//     roomIDGenerator = counter();
-//     game = new Game(
-//       players,
-//       attackCards,
-//       organCards,
-//       dealer,
-//       afflictionHandler,
-//     );
-//     // game.dealCards();
-//     game.setFirstPlayer();
-//     games[101] = game;
+    const p1Cards = p1.getPlayerDetails().attackCards;
 
-//     app = createApp({
-//       session,
-//       idGenerator,
-//       playerIDGenerator,
-//       roomIDGenerator,
-//       rooms,
-//       shuffle,
-//       games,
-//     }, logger);
-//   });
-//   it("Should get an attack card from selected opponent and send common cold to him", async () => {
-//     const res = await app.request("/attack", {
-//       method: "post",
-//       body: JSON.stringify({
-//         attackerID: 1,
-//         opponentID: 1,
-//         attackCardID: 1,
-//         organCardID: 1,
-//         isInstant: false,
-//       }),
-//       headers: { cookie: "roomID=101" },
-//     });
+    const p2Cards = p2.getPlayerDetails().attackCards;
 
-//     assertEquals(res.status, 200);
-//     const { success } = await res.json();
-//     assertEquals(success, true);
-//   });
-// });
+    assertEquals(p1Cards.some((c) => [2, 7, 8, 9, 10].includes(c.id)), true);
+    assertEquals(p2Cards.some((c) => c.id === 1), true);
+  });
+});

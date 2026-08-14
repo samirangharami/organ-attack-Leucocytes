@@ -53,7 +53,6 @@ export const serveGameState = (c) => {
   const games = c.get("games");
 
   if (!(roomID in games)) {
-    console.log({ games });
     return c.json({ status: false, message: "Game not found" }, 401);
   }
 

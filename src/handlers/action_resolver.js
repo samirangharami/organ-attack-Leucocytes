@@ -5,10 +5,8 @@ import { Game } from "../models/game.js";
 
 const constructAction = (game, body) => {
   const { attackerID, attackCardID } = body;
-  console.log("body", body);
 
   const card = game.getAttackCardData(attackerID, attackCardID);
-  console.log("here is the card details", card);
 
   const { action } = card;
 
@@ -26,8 +24,6 @@ const playCard = (roomID, gameController, game = new Game(), action) => {
 
   done.then(() => {
     gameController.resolveAction(game);
-
-    console.log("action after resolve", action.name);
 
     // should go inside game controller
     gameController.updateEventStatus(game);

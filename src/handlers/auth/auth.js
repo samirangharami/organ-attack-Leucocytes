@@ -39,9 +39,9 @@ export const logoutHandler = (c) => {
 
 export const loginHandler = async (c) => {
   const username = await getUsername(c);
-  const isUsernameValid = username === null || username === "";
+  const isUsernameInvalid = username === null || username === "";
 
-  if (isUsernameValid) {
+  if (isUsernameInvalid) {
     return c.json({ message: "invalid username" }, 401);
   }
 

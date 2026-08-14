@@ -100,7 +100,6 @@ const setCardIndicators = (attackCard, cardData) => {
   }
   if (!isInstant) return;
   const instant = attackCard.querySelector(".instant");
-  console.log(instant);
   instant.setAttribute("src", "/assets/icons/fire.png");
 };
 
@@ -334,8 +333,6 @@ export const renderGame = async (isAlive) => {
   const gameState = window.gameState;
   const { event, players, self } = gameState.snapshot();
   const livingPlayers = players.filter((player) => player.isAlive);
-  console.log("self", self);
-  console.log("event", event);
 
   if (livingPlayers.length === 1) {
     const page = isAlive ? "pages/winner.html" : "pages/looser.html";
