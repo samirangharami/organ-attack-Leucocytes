@@ -54,10 +54,52 @@ const leaveLobby = (isHost) => {
 
 const copyRoomID = () => {
   const copyBtn = document.querySelector("#copy-btn");
+  let copyTimeoutId = null;
 
   copyBtn.addEventListener("click", () => {
-    const id = document.querySelector("#room-id").textContent;
-    navigator.clipboard.writeText(id);
+    const id = document.querySelector("#room-id").textContent.trim();
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(id).catch((err) => console.error(err));
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = id;
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+      document.body.prepend(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        textArea.remove();
+      }
+    }
+
+    const originalSrc = "/assets/icons/copy-icon.png";
+    copyBtn.src = "/assets/icons/tick-icon.svg";
+
+    let prompt = document.querySelector("#copy-prompt");
+    if (!prompt) {
+      prompt = document.createElement("span");
+      prompt.id = "copy-prompt";
+      prompt.textContent = "Copied to clipboard!";
+      copyBtn.parentNode.insertBefore(prompt, copyBtn.nextSibling);
+    }
+
+    if (copyTimeoutId) {
+      clearTimeout(copyTimeoutId);
+    }
+
+    copyTimeoutId = setTimeout(() => {
+      copyBtn.src = originalSrc;
+      const currentPrompt = document.querySelector("#copy-prompt");
+      if (currentPrompt) {
+        currentPrompt.remove();
+      }
+      copyTimeoutId = null;
+    }, 2000);
   });
 };
 

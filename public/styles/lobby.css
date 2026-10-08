@@ -174,12 +174,24 @@ li:last-child {
 
 
 #copy-btn {
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   border-radius: 50%;
+  vertical-align: middle;
+  object-fit: contain;
 }
 
 #copy-btn:hover {
   background: #ffffff53;
+}
+
+#copy-prompt {
+  font-size: 16px;
+  margin-left: 10px;
+  color: #f7b83b;
+  vertical-align: middle;
+  font-family: Schoolbell, fantasy;
 }
 
 
